@@ -1,21 +1,23 @@
 import { useState,useEffect } from "react";
 import DataCompany from "./dataCompany";
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 const historyCompany = () => {
   const [datos,setDatos] = useState([]);
-
+  const [control,setidControl] = useState();
+  const [updatecontrol,setupdateidControl] = useState();
   useEffect(()=>{
     const listdata =async ()=>{
             try{
-                const url = `${import.meta.env.VITE_RUTA}/api/v1/post`;
-                const {data} = await axios.get(url);
-                setDatos(data);
+                const url = `${import.meta.env.VITE_APP_RUTA}/company/`;
+                const {data}= await axios.get(url);
+                setDatos(data.companies);
             }catch(error){
                 console.log(error);
             }
 }
 listdata();
-});
+},[control,updatecontrol]);
   return (
     <div className="container">
    <div className="row justify-content-center mt-5">
@@ -27,9 +29,18 @@ listdata();
    <div className="row justify-content-center mt-5">
        <div className="col-8">
        <table className="table table-responsive">
+       <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre de la Compañia</th>
+              <th scope="col">Direccion </th>
+              <th scope="col">NIT</th>
+              <th scope="col">Telefono</th>
+            </tr>
+      </thead>
            <tbody>
-                {datos.map(data => (
-                    <DataCompany data={data} key={data.id}/>   
+                {datos?.map(data => (
+                    <DataCompany data={data} setupdateidControl={setupdateidControl} setidControl={setidControl}key={data.id}/>   
                 ) )}
             </tbody>
         </table>

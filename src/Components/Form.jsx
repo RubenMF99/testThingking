@@ -37,8 +37,8 @@ const Form = () => {
 
   const inserDataCompany = async () => {
     try {
-      const url = `${import.meta.env.VITE_APP_RUTA}/excusa`;
-      const result = await axios.post(url, excusa);
+      const url = `${import.meta.env.VITE_APP_RUTA}/company/`;
+      const result = await axios.post(url, data);
       Swal.fire({
         icon: 'success',
         title: 'Exitoso',
